@@ -1,10 +1,19 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.api import tenants, users, auth, academic, enrollment, attendance, finance
 
 app = FastAPI(
     title="Smart Vidhyalai API",
     version="1.0.0",
     description="The AI-powered core engine for educational institutions.",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Allows your local Nuxt app
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows POST, GET, PUT, DELETE, etc.
+    allow_headers=["*"],
 )
 
 app.include_router(auth.router, prefix="/api/v1/auth", tags=["Authentication"])
